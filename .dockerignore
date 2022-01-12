@@ -1,0 +1,9 @@
+.dockerignore
+node_modules
+npm-debug.log
+Dockerfile
+docker-compose.yml
+.git
+.gitignore
+logs/lnd_notifier.log
+.vscode

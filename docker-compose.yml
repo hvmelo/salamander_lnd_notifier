@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  notifier:
+    image: docker.io/hvmelo/lnd_notifier:latest
+    volumes:
+      - /Users/hvmelo/lnd:/home/.lnd_notifier
+      - /Users/hvmelo/lnd/logs:/app/logs
+    environment:
+      - LND_HOST=lnd-testnet
+      - LND_PORT=10009
+  lnd-testnet:
+    image: docker.io/lightninglabs/lnd:v0.14.1-beta
+    command: --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community --rpclisten=0.0.0.0:10009
+    volumes:
+      - /Users/hvmelo/lnd:/root/.lnd
+    ports:
+      - 9735:9735
+      - 10009:10009
