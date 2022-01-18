@@ -1,0 +1,51 @@
+#cloud-config
+users:
+- name: composer
+  uid: 2000
+  groups: docker
+write_files:
+- path: /home/composer/docker-compose.yml
+  permissions: 0644
+  owner: composer
+  content: |
+    version: "3.7"
+    services:
+      notifier:
+        image: docker.io/hvmelo/lnd_notifier:0.1.1
+        volumes:
+          - /home/.lnd:/home/.lnd_notifier
+          - /home/.lnd/logs:/app/logs
+        environment:
+          - LND_HOST=lnd-server
+          - LND_PORT=10009
+          - MACAROON_PATH=/home/.lnd_notifier/data/chain/bitcoin/testnet/admin.macaroon
+          - TLS_CERT_PATH=/home/.lnd_notifier/tls.cert
+          - PASSWORD_FILE_PATH=/home/.lnd_notifier/lnd_passwd
+      lnd-server:
+        image: docker.io/lightninglabs/lnd:v0.14.1-beta
+        command: --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community --rpclisten=0.0.0.0:10009 --tlsextradomain=salamanderlnd.ddns.net
+        volumes:
+          - /home/.lnd:/root/.lnd
+        ports:
+          - 9735:9735
+          - 10009:10009
+- path: /etc/systemd/system/composer.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=Composer Service
+    Requires=docker.service network-online.target
+    After=docker.service network-online.target
+    [Service]
+    User=composer
+    Environment="HOME=/home/composer"
+    ExecStart=/usr/bin/cd 
+    ExecStop=/usr/bin/docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "/home/composer/.docker:/root/.docker" -v "/home/composer:/home/composer" -w="/home/composer" docker/compose:1.29.2 rm -f
+    Restart=on-failure
+    RestartSec=10
+    [Install]
+    WantedBy=multi-user.target
+runcmd:
+- systemctl daemon-reload
+- systemctl enable --now --no-block composer.service

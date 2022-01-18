@@ -4,9 +4,7 @@ RUN apk add dumb-init
 ENV NODE_ENV=production
 ENV DEBUG=lnrpc*
 WORKDIR /app
-COPY --chown=node:node ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "package-lock.json*", "./"]
 RUN npm ci --production
-COPY --chown=node:node ["grpc.js", "./node_modules/lnd-grpc/dist"]
-COPY --chown=node:node . .
-USER node
+COPY . .
 CMD ["dumb-init", "node", "index.js"]

@@ -6,9 +6,9 @@ const DEFAULT_MACAROON_PATH = "/home/.lnd_notifier/admin.macaroon";
 const DEFAULT_TLS_CERT_PATH = "/home/.lnd_notifier/tls.cert";
 const DEFAULT_PASSWORD_FILE_PATH = "/home/.lnd_notifier/lnd.passwd";
 
-//const DEFAULT_MACAROON_PATH = "/Users/hvmelo/lnd/admin.macaroon";
-//const DEFAULT_TLS_CERT_PATH = "/Users/hvmelo/lnd/tls.cert";
-//const DEFAULT_PASSWORD_FILE_PATH = "/Users/hvmelo/lnd/lnd.passwd";
+// const DEFAULT_MACAROON_PATH = "/Users/hvmelo/lnd/admin.macaroon";
+// const DEFAULT_TLS_CERT_PATH = "/Users/hvmelo/lnd/tls.cert";
+// const DEFAULT_PASSWORD_FILE_PATH = "/Users/hvmelo/lnd/lnd.passwd";
 
 // const DEFAULT_HOST = "salamanderlnd.ddns.net";
 // const DEFAULT_PORT = "10009";

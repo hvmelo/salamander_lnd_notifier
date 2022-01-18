@@ -5,7 +5,7 @@ import { log } from './utils/logger.js';
 
 log.info(`Started a new LND notifier instance`);
 
-//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const macaroon = fs.readFileSync(MACAROON_PATH).toString('hex');
 const password = fs.readFileSync(PASSWORD_FILE_PATH).toString().replace(/\r?\n|\r/g, '');
@@ -82,6 +82,7 @@ if (grpc.state == 'active') {
     call.on('end', function () {
       log.info(`LND transactions stream closed by the server`);
     });
+    
   } catch (error) {
     log.error(`An error occurred when trying to subscribe to transactions: ${error.message}`);
   }

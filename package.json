@@ -12,7 +12,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.4.5",
     "grpc-promise": "^1.4.0",
-    "lnd-grpc": "^0.5.2",
+    "lnd-grpc": "^0.5.3",
     "log4js": "^6.3.0"
   }
 }

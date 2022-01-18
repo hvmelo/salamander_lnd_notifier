@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   notifier:
-    image: docker.io/hvmelo/lnd_notifier:latest
+    image: docker.io/hvmelo/lnd_notifier:1.0.1
     volumes:
       - /Users/hvmelo/lnd:/home/.lnd_notifier
       - /Users/hvmelo/lnd/logs:/app/logs
