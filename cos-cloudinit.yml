@@ -23,7 +23,7 @@ write_files:
           - PASSWORD_FILE_PATH=/home/.lnd_notifier/lnd_passwd
       lnd-server:
         image: docker.io/lightninglabs/lnd:v0.14.1-beta
-        command: --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community --rpclisten=0.0.0.0:10009 --tlsextradomain=salamanderlnd.ddns.net
+        command: --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community --rpclisten=0.0.0.0:10009 --tlsextradomain=34.123.242.2 --tlsextradomain=salamanderlnd.ddns.net
         volumes:
           - /home/.lnd:/root/.lnd
         ports:
@@ -40,7 +40,7 @@ write_files:
     [Service]
     User=composer
     Environment="HOME=/home/composer"
-    ExecStart=/usr/bin/cd 
+    ExecStart=/usr/bin/docker run --rm -v  /var/run/docker.sock:/var/run/docker.sock -v "/home/composer/.docker:/root/.docker" -v "/home/composer:/home/composer" -w="/home/composer" docker/compose:1.29.2 up 
     ExecStop=/usr/bin/docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "/home/composer/.docker:/root/.docker" -v "/home/composer:/home/composer" -w="/home/composer" docker/compose:1.29.2 rm -f
     Restart=on-failure
     RestartSec=10
@@ -48,4 +48,4 @@ write_files:
     WantedBy=multi-user.target
 runcmd:
 - systemctl daemon-reload
-- systemctl enable --now --no-block composer.service
+- systemctl start composer.service
